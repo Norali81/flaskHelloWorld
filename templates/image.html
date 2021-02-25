@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<h2>Image input field </h2>
+
+<form method="POST" action="/image_result" enctype="multipart/form-data">
+  <label for="img">Select image:</label>
+  <input type="file" id="image" name="image" accept="image/*">
+  <input type="submit">
+</form>
+
+
+{% endblock %}
+
