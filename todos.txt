@@ -1,13 +1,8 @@
-export FLASK_APP=application.py
+export FLASK_APP=main.py
 
 export GOOGLE_APPLICATION_CREDENTIALS="/home/noralimbourg/Documents/FlaskTutorial/key/service_account_key.json"
 
 export GOOGLE_CLIENT_ID="<here google client ID>"
 export GOOGLE_CLIENT_SECRET="<here client secret>"
 
-# Configuration
-GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID", None)
-GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET", None)
-GOOGLE_DISCOVERY_URL = (
-    "https://accounts.google.com/.well-known/openid-configuration"
-)
+
