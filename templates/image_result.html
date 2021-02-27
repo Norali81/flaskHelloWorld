@@ -4,6 +4,12 @@
 
 The file name is:
 {{ filename }} 
-{{ file }}
+<br>
+{{ labels }}
+<br> 
+
+{% for label in labels %}
+   <tr><td>{{ label['description'] }}</td><br></tr>
+   {% endfor %}
 {% endblock %}
 
