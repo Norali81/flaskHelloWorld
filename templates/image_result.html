@@ -5,11 +5,22 @@
 The file name is:
 {{ filename }} 
 <br>
-{{ labels }}
 <br> 
+<table>
+<tr>
+    <th>Label</th>
+    <th>Score</th>
+    <th>Topicality</th>
+</tr>
 
 {% for label in labels %}
-   <tr><td>{{ label['description'] }}</td><br></tr>
+  
+    <tr>
+        <td>{{ label['description'] }}</td>
+        <td>{{ label['score'] }}</td>
+        <td>{{ label['topicality'] }}</td>
+    </tr>
    {% endfor %}
+</table>
 {% endblock %}
 
