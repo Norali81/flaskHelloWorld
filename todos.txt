@@ -6,3 +6,16 @@ export GOOGLE_CLIENT_ID="<here google client ID>"
 export GOOGLE_CLIENT_SECRET="<here client secret>"
 
 
+
+Docker commands local
+
+docker build -t  myimage . 
+
+docker run -d -p 8080:8080 myimage
+
+docker run -d -p 8080:8080 --env=GOOGLE_APPLICATION_CREDENTIALS=/opt/app/key/service_account_key.json
+
+
+Cloud Build 
+gcloud builds submit --tag gcr.io/PROJECT_ID/IMAGE_NAME
+
