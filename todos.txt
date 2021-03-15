@@ -18,4 +18,109 @@ docker run -d -p 8080:8080 --env=GOOGLE_APPLICATION_CREDENTIALS=/opt/app/key/ser
 
 Cloud Build 
 gcloud builds submit --tag gcr.io/PROJECT_ID/IMAGE_NAME
+gcloud builds submit --tag gcr.io/kubekubectl create deployment flaskvision2 --image=gcr.io/${PROJECT_ID}/flaskvision2:v1rnetesnoratest/flaskvision 
+gcloud builds submit --tag gcr.io/${GOOGLE_CLOUD_PROJECT}/quickstart-image .
+
+
+Run locally
+
+export PROJECT_ID=kubernetesnoratest
+docker run --rm -p 8080:8080 gcr.io/${PROJECT_ID}/flaskvision
+gcloud auth configure-docker
+
+Push to registry
+docker push gcr.io/${PROJECT_ID}/flaskvision:v1
+
+
+Kubernets Cluster
+export my_zone=europe-west1-b
+export my_cluster=hello-world-cluster
+
+gcloud container clusters create $my_cluster --num-nodes 2 --zone $my_zone --enable-ip-alias
+
+gcloud container clusters get-credentials $my_cluster --zone $my_zone
+
+In Cloud Shell, execute the following command to enable bash autocompletion for kubectl:
+
+source <(kubectl completion bash)
+
+
+Push image and deploy - Docker
+export PROJECT_ID=kubernetesnoratest
+docker build -t gcr.io/${PROJECT_ID}/flaskvision:v1 .
+docker push gcr.io/${PROJECT_ID}/flaskvision:v1
+kubectl create deployment flaskvision --image=gcr.io/${PROJECT_ID}/flaskvision:v1
+
+Push image and deploy - Cloud Build
+gcloud builds submit --tag gcr.io/kubernetesnoratest/flaskvision2:v1
+export PROJECT_ID=kubernetesnoratest
+kubectl create deployment flaskvision2 --image=gcr.io/${PROJECT_ID}/flaskvision2:v1
+
+
+Expose pod
+kubectl expose pod $my_pod --port 8080 --type LoadBalancer
+
+
+
+--scopes need to be present to make API calls to other GCP services
+
+Kubernets Cluster
+export my_zone=europe-west1-b
+export my_cluster=flaskcluster
+
+
+gcloud container clusters create $my_cluster --num-nodes 2 --zone $my_zone --enable-ip-alias --scopes=cloud-platform,default,gke-default
+
+
+Attention: Env variable has to be passed with location of the key (but forgot in which tutorial)
+
+---------
+TODO: Adapt this to the cloudvision app
+
+Deployment 
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.7.9
+        ports:
+        - containerPort: 80
+
+---------
+Service service-nginx.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  type: LoadBalancer
+  selector:
+    app: nginx
+  ports:
+  - protocol: TCP
+    port: 60000
+    targetPort: 80
+
+----------
+
+
+    
+    
+    
 
