@@ -32,12 +32,12 @@ RUN pip install -r requirements.txt
 COPY app.yaml .
 COPY main.py . 
 ADD templates ./templates
-# ADD key ./key
-# RUN export GOOGLE_APPLICATION_CREDENTIALS="/opt/app/key/service_account_key.json"
+# ADD key ./key 
+# RUN export GOOGLE_APPLICATION_CREDENTIALS="/opt/app/key/service_account_key.json" 
 # command to run on container start
 #CMD [ "python", "./server.py" ]
 #RUN make /app
-CMD gunicorn -b 0.0.0.0:8080 main:app
+CMD gunicorn -b 0.0.0.0:8080 main:app --timeout 90
 
 
 
